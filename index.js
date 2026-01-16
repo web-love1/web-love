@@ -11,7 +11,7 @@ app.listen(8080, () => console.log('Web Server พร้อมใช้งาน
 // --- 2. การตั้งค่าพื้นฐาน ---
 const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbze9DXvJfv4r1cuwkqOzKgOf1cSmf2QPfsIcOm-Fd6rQ33g3_Ml3lNt1m38imSv0sYXWw/exec"; // *** เปลี่ยนเป็น URL ของคุณ ***
 const BASE_ROLE_ID = "1428804583471448264";
-const GROUP_ID_MAIN = 36092768; // ไอดีกลุ่มหลัก
+const GROUP_ID_MAIN = 35650805; // ไอดีกลุ่มหลัก
 
 // รายการกลุ่มพันธมิตรและไอดีโรล (32 กลุ่ม)
 const allianceGroups = [

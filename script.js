@@ -167,43 +167,47 @@ const lawData = {
 
 function loadContent(key) {
     const data = lawData[key];
-    const container = document.getElementById('app-content');
-    if (!data) return;
+    const container = document.getElementById('app-content'); // ดึงมาจาก <main id="app-content">
 
-    // ล้างหน้าจอและใส่ชื่อหมวดหมู่
-    let html = `<div class="section-title" style="margin-top:20px;">${data.title}</div>`;
+    if (!data) {
+        console.error("ไม่พบข้อมูลสำหรับคีย์:", key);
+        return;
+    }
+
+    let html = `<h2 class="section-title">${data.title}</h2>`;
 
     data.content.forEach(item => {
         if (item.type === 'header') {
-            html += `<div class="section-title" style="font-size:22px; border-bottom:2px solid #800000; margin-top:30px; color:#555;">${item.text}</div>`;
+            html += `<div class="content-header">${item.text}</div>`;
         } else {
-            // ป้องกันปัญหาเครื่องหมาย ' ในข้อความ
-            const safeText = item.text.replace(/'/g, "\\'").replace(/\n/g, " ");
+            // ป้องกันปัญหาการคัดลอกข้อความที่มีเครื่องหมายพิเศษ
+            const cleanText = item.text.replace(/'/g, "\\'").replace(/\n/g, " ");
             html += `
-                <div class="law-card" style="background:white; padding:15px; margin-bottom:10px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1); border-left:5px solid #800000;">
-                    <div style="flex:1;">
-                        <span class="law-id" style="font-weight:bold; color:#800000;">${item.id}</span>
-                        <p style="margin:5px 0;">${item.text}</p>
+                <div class="law-card">
+                    <div class="law-info">
+                        <span class="law-id">${item.id}</span>
+                        <p>${item.text}</p>
                     </div>
-                    <button class="copy-btn" onclick="copyToClip('${item.id}: ${safeText}')" style="background:#800000; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; margin-left:15px;">คัดลอก</button>
+                    <button class="copy-btn" onclick="copyToClip('${item.id} ${cleanText}')">คัดลอก</button>
                 </div>`;
         }
     });
+
     container.innerHTML = html;
 }
 
 function copyToClip(text) {
     navigator.clipboard.writeText(text).then(() => {
-        // เพิ่มลูกเล่นให้แจ้งเตือนดูเป็นกันเองขึ้น
-        const alertBox = document.createElement('div');
-        alertBox.innerText = "📋 คัดลอกสำเร็จแล้ว!";
-        alertBox.style = "position:fixed; bottom:20px; right:20px; background:#4CAF50; color:white; padding:10px 20px; border-radius:5px; z-index:9999;";
-        document.body.appendChild(alertBox);
-        setTimeout(() => alertBox.remove(), 2000);
+        alert("คัดลอกมาตรานี้เรียบร้อย!");
+    }).catch(err => {
+        console.error('ไม่สามารถคัดลอกได้:', err);
     });
 }
 
-window.onload = () => loadContent('constitutional');
+// ตั้งค่าให้แสดงหน้ารัฐธรรมนูญทันทีเมื่อเปิดเว็บ
+window.onload = () => {
+    loadContent('constitutional');
+};
 
 
 

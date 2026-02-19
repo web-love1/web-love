@@ -170,19 +170,22 @@ function loadContent(key) {
     const container = document.getElementById('app-content');
     if (!data) return;
 
-    let html = `<div class="section-title">${data.title}</div>`;
+    // ล้างหน้าจอและใส่ชื่อหมวดหมู่
+    let html = `<div class="section-title" style="margin-top:20px;">${data.title}</div>`;
 
     data.content.forEach(item => {
         if (item.type === 'header') {
-            html += `<div class="section-title" style="font-size:24px; border-bottom:2px solid #800000; margin-top:40px;">${item.text}</div>`;
+            html += `<div class="section-title" style="font-size:22px; border-bottom:2px solid #800000; margin-top:30px; color:#555;">${item.text}</div>`;
         } else {
+            // ป้องกันปัญหาเครื่องหมาย ' ในข้อความ
+            const safeText = item.text.replace(/'/g, "\\'").replace(/\n/g, " ");
             html += `
-                <div class="law-card">
-                    <div>
-                        <span class="law-id">${item.id}</span>
-                        <p>${item.text}</p>
+                <div class="law-card" style="background:white; padding:15px; margin-bottom:10px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1); border-left:5px solid #800000;">
+                    <div style="flex:1;">
+                        <span class="law-id" style="font-weight:bold; color:#800000;">${item.id}</span>
+                        <p style="margin:5px 0;">${item.text}</p>
                     </div>
-                    <button class="copy-btn" onclick="copyToClip('${item.id} ${item.text.replace(/'/g, "\\'").replace(/\n/g, " ")}')">คัดลอก</button>
+                    <button class="copy-btn" onclick="copyToClip('${item.id}: ${safeText}')" style="background:#800000; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; margin-left:15px;">คัดลอก</button>
                 </div>`;
         }
     });
@@ -191,7 +194,12 @@ function loadContent(key) {
 
 function copyToClip(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert("คัดลอกมาตรานี้เรียบร้อย!");
+        // เพิ่มลูกเล่นให้แจ้งเตือนดูเป็นกันเองขึ้น
+        const alertBox = document.createElement('div');
+        alertBox.innerText = "📋 คัดลอกสำเร็จแล้ว!";
+        alertBox.style = "position:fixed; bottom:20px; right:20px; background:#4CAF50; color:white; padding:10px 20px; border-radius:5px; z-index:9999;";
+        document.body.appendChild(alertBox);
+        setTimeout(() => alertBox.remove(), 2000);
     });
 }
 

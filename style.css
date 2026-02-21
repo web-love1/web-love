@@ -22,6 +22,12 @@ body {
 .logo { width: 130px; margin-bottom: 15px; }
 .main-header h1 { margin: 10px 0; font-size: 2.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
 
+.main-header p { 
+    color: #ffcc00; /* สีเหลืองทองแบบเดียวกับเส้นขอบ */
+    font-weight: bold; 
+    font-size: 1.1rem;
+}
+
 /* Menu Grid */
 .menu-grid {
     display: grid;
@@ -86,4 +92,5 @@ body {
 @media (max-width: 600px) {
     .menu-grid { grid-template-columns: 1fr; }
     .section-title { font-size: 26px; }
+
 }

@@ -30,7 +30,7 @@ const lawData = {
             { id: 'มาตรา ๒๖', text: 'หากนายกรัฐมนตรีมีพฤติการณ์เสื่อมเสีย ผบ.ทสส. และ ผบ.ทบ. สามารถเรียกประชุมฉุกเฉินเพื่อให้พ้นจากตำแหน่งได้' }
         ]
     },
-'criminal': {
+    'criminal': {
         title: "ประมวลกฎหมายอาญาทหาร พ.ศ. ๒๕๖๙",
         content: [
             { type: 'header', text: 'บทประกาศใช้' },
@@ -226,6 +226,7 @@ function copyToClip(text) {
 }
 
 window.onload = () => loadContent('constitutional');
+
 
 
 
